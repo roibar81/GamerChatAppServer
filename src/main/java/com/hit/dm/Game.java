@@ -1,12 +1,12 @@
 package com.hit.dm;
 
-public class Games {
+public class Game {
     private String name;
     private String image;
     private String catagory;
     private int id;
     
-    public Games(int id, String name, String image, String catagory) {
+    public Game(int id, String name, String image, String catagory) {
         this.id = id;
         this.name = name;
         this.image = image;

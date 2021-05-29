@@ -1,14 +1,14 @@
 package com.hit.dm;
 
-import java.util.List;
+import java.util.ArrayList;
 
 public class User {
     private String name;
     private String email;
     private String salt;
     private String password;
-    private List<User> friends;
-    private List<Games> favGames;
+    private ArrayList<User> friends;
+    private ArrayList<Games> favGames;
     
     public User(String name, String email, String password, List<User> friends, List<Games> favGames) {
         this.name = name;

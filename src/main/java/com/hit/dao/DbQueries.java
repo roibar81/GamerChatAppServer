@@ -16,7 +16,7 @@ public class DbQueries {
     //games table queries
     public String addGame = "insert into games (id, name, image, category)" +
     "values (?, ?, ?, ?);";
-    public String gallAllGames = "select * from games;";
+    public String getAllGames = "select * from games;";
     public String deleteGame = "delete from games where=?;";
     //user table queries
 }
