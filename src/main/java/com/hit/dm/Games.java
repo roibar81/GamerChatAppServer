@@ -1,14 +1,24 @@
 package com.hit.dm;
 
 public class Games {
-    String name;
-    String image;
-    String catagory;
+    private String name;
+    private String image;
+    private String catagory;
+    private int id;
     
-    public Games(String name, String image, String catagory) {
+    public Games(int id, String name, String image, String catagory) {
+        this.id = id;
         this.name = name;
         this.image = image;
         this.catagory = catagory;
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
     }
 
     public String getName() {
@@ -37,8 +47,7 @@ public class Games {
 
     @Override
     public String toString() {
-        return "Games [catagory=" + catagory + ", image=" + image + ", name=" + name + "]";
+        return "Games [catagory=" + catagory + ", id=" + id + ", image=" + image + ", name=" + name + "]";
     }
-
     
 }
