@@ -10,6 +10,7 @@ import java.util.ArrayList;
 
 import com.hit.Password_utils.Password_utils;
 import com.hit.dm.Game;
+import com.hit.dm.User;
 
 
 public class DbHandleImpl implements DbHandle {
@@ -21,7 +22,10 @@ public class DbHandleImpl implements DbHandle {
 	private DbQueries queries = DbQueries.getInstance();
 	private static DbHandleImpl instance;
 	private Password_utils passUtil = Password_utils.getInstance();
-    private ArrayList<Game> gamesList = null;
+    private ArrayList<Game> gamesList = new ArrayList<Game>();
+    private ArrayList<User> friendsList = new ArrayList<User>();
+    private Game game;
+    private User user;
 	
 	private DbHandleImpl() {
 		
@@ -58,8 +62,19 @@ public class DbHandleImpl implements DbHandle {
 
     @Override
     public void addGame(Game game) {
-        // TODO Auto-generated method stub
-        
+        try {
+			conn = getConnection();
+			prepStat = conn.prepareStatement(queries.addGame); 
+			prepStat.setInt(1, game.getId());
+			prepStat.setString(2, game.getName());
+			prepStat.setString(3, game.getImage());
+			prepStat.setString(4, game.getCatagory());
+			prepStat.executeUpdate();
+			prepStat.close();
+			conn.close();			
+		} catch (Exception e) {
+			System.out.println(e.getMessage());	
+		}
     }
 
     @Override
@@ -69,18 +84,103 @@ public class DbHandleImpl implements DbHandle {
 			state = conn.createStatement();
 			rs = state.executeQuery(queries.getAllGames);
             while(rs.next()) {
-                
+                game = new Game(rs.getInt("id"), rs.getString("name"), rs.getString("image"), rs.getString("category"));
+                gamesList.add(game);
             }
 		} catch (Exception e) {
 			System.out.println(e.getMessage());	
 		}
-		return null;
+		return gamesList;
     }
 
     @Override
     public void deleteGame(Game game) {
-        // TODO Auto-generated method stub
+        try {
+			conn = getConnection();
+			prepStat = conn.prepareStatement(queries.deleteGame); 
+			prepStat.setString(1, game.getName());
+			prepStat.executeUpdate();
+			prepStat.close();
+			conn.close();			
+		} catch (Exception e) {
+			System.out.println(e.getMessage());	
+		}
+    }
+
+    @Override
+    public ArrayList<User> getUserFriends(User user) {
+        try {
+			conn= getConnection();
+			prepStat = conn.prepareStatement(queries.getUserFriends);
+            prepStat.setInt(1, user.getId());
+            rs = prepStat.executeQuery();
+            while(rs.next()) {
+                user = new User(rs.getInt("id"), rs.getString("name"), rs.getString("email"), rs.getString("password"), rs.getString("salt"));
+                friendsList.add(user);
+            }
+		} catch (Exception e) {
+			System.out.println(e.getMessage());	
+		}
+		return friendsList;
+    }
+
+    @Override
+    public void addUserFriend(User user, User friend) {
+ 
+    }
+
+    @Override
+    public void deleteUserFriend(User user, User friend) {
         
+        
+    }
+
+    @Override
+    public void addUser(User user) {
+        try {
+			conn = getConnection();
+			prepStat = conn.prepareStatement(queries.addUser); 
+			prepStat.setInt(1, user.getId());
+			prepStat.setString(2, user.getName());
+			prepStat.setString(3, user.getEmail());
+			prepStat.setString(4, user.getPassword());
+            prepStat.setString(5, user.getSalt());
+			prepStat.executeUpdate();
+			prepStat.close();
+			conn.close();			
+		} catch (Exception e) {
+			System.out.println(e.getMessage());	
+		}
+    }
+
+    @Override
+    public ArrayList<User> getAllUsers() {
+            try {
+			conn= getConnection();
+			state = conn.createStatement();
+			rs = state.executeQuery(queries.getAllGames);  //rs contain the query result.
+            while(rs.next()) {
+                user = new User(rs.getInt("id"), rs.getString("name"), rs.getString("email"), rs.getString("password"), rs.getString("salt"));
+                friendsList.add(user);
+            }
+		} catch (Exception e) {
+			System.out.println(e.getMessage());	
+		}
+		return friendsList;
+    }
+
+    @Override
+    public void deleteUser(User user) {
+        try {
+			conn = getConnection();
+			prepStat = conn.prepareStatement(queries.deleteUser); 
+			prepStat.setString(1, user.getName());
+			prepStat.executeUpdate();
+			prepStat.close();
+			conn.close();			
+		} catch (Exception e) {
+			System.out.println(e.getMessage());	
+		}
     }
 
 

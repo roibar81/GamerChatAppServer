@@ -2,21 +2,37 @@ package com.hit.dm;
 
 import java.util.ArrayList;
 
+import com.hit.Password_utils.Password_utils;
+
 public class User {
+    private int id;
     private String name;
     private String email;
     private String salt;
     private String password;
     private ArrayList<User> friends;
-    private ArrayList<Games> favGames;
+    private ArrayList<Game> favGames;
     
-    public User(String name, String email, String password, List<User> friends, List<Games> favGames) {
+    public User(int id, String name, String email, String password, String salt) {
+        this.id = id;
         this.name = name;
         this.email = email;
         this.password = password;
-        this.friends = friends;
-        this.favGames = favGames;
+        this.salt = salt;
+        this.friends = new ArrayList<User>();
+        this.favGames = new ArrayList<Game>();
     }
+
+    
+    public int getId() {
+        return id;
+    }
+
+
+    public void setId(int id) {
+        this.id = id;
+    }
+
 
     public String getName() {
         return name;
@@ -50,26 +66,27 @@ public class User {
         this.password = password;
     }
 
-    public List<User> getFriends() {
+    public ArrayList<User> getFriends() {
         return friends;
     }
 
-    public void setFriends(List<User> friends) {
+    public void setFriends(ArrayList<User> friends) {
         this.friends = friends;
     }
 
-    public List<Games> getFavGames() {
+    public ArrayList<Game> getFavGames() {
         return favGames;
     }
 
-    public void setFavGames(List<Games> favGames) {
+    public void setFavGames(ArrayList<Game> favGames) {
         this.favGames = favGames;
     }
 
+
     @Override
     public String toString() {
-        return "User [email=" + email + ", favGames=" + favGames + ", friends=" + friends + ", name=" + name
-                + ", password=" + password + ", salt=" + salt + "]";
+        return "User [email=" + email + ", favGames=" + favGames + ", friends=" + friends + ", id=" + id + ", name="
+                + name + ", password=" + password + ", salt=" + salt + "]";
     }
 
     

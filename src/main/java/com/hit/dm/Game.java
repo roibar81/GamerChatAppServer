@@ -47,7 +47,7 @@ public class Game {
 
     @Override
     public String toString() {
-        return "Games [catagory=" + catagory + ", id=" + id + ", image=" + image + ", name=" + name + "]";
+        return "Game [catagory=" + catagory + ", id=" + id + ", image=" + image + ", name=" + name + "]";
     }
     
 }
