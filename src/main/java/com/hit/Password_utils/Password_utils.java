@@ -82,10 +82,10 @@ public class Password_utils { //Encryption methods to increase SECURITY & REGULA
         Pattern lowerCasePatten = Pattern.compile("[a-z ]");
         Pattern digitCasePatten = Pattern.compile("[0-9 ]");
         Configuration conf = getConfigurations();
+
     	if(password.length() < conf.getLength()) {
     		flag = false;
     	}
-    	
     	if(!specailCharPatten.matcher(password).find() && conf.isSpeChar()) {
     		flag=false;
     	}

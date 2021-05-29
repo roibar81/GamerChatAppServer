@@ -20,7 +20,7 @@ public class Server implements Runnable{
     @Override
     public void run() {
         Socket socket = null;
-
+        
         while(true) {
             try {
                 ExecutorService executorService = Executors.newFixedThreadPool(20);
