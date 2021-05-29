@@ -1,5 +1,9 @@
 package com.hit.dao;
 
+import java.io.FileNotFoundException;
+import java.io.FileReader;
+import java.io.IOException;
+import java.io.Reader;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
@@ -7,8 +11,9 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
-
+import com.google.gson.Gson;
 import com.hit.Password_utils.Password_utils;
+import com.hit.dm.Dbconf;
 import com.hit.dm.Game;
 import com.hit.dm.User;
 
@@ -26,6 +31,7 @@ public class DbHandleImpl implements DbHandle {
     private ArrayList<User> friendsList = new ArrayList<User>();
     private Game game;
     private User user;
+    private Dbconf dbconf;
 	
 	private DbHandleImpl() {
 		
@@ -40,14 +46,13 @@ public class DbHandleImpl implements DbHandle {
     
     @Override
 	public Connection getConnection(){ //Getting connection to db
-		String path = "jdbc:mysql://localhost:3306/gamerChatApp";
-		String user = "root";
-		String pass = "Kill-Z0ne";
+        dbconf = getDbconf();
+
 		try {
 		    // create a connection to the db
 			//DriverManager.registerDriver(new com.mysql.jdbc.Driver ());
 			Class.forName("com.mysql.cj.jdbc.Driver").newInstance();
-		    conn = DriverManager.getConnection(path, user, pass);   
+		    conn = DriverManager.getConnection(dbconf.getPath(), dbconf.getUser(), dbconf.getPass());   
 		} catch(SQLException e) {
 		   System.out.println(e.getMessage());
 		} catch (ClassNotFoundException e) {
@@ -183,6 +188,17 @@ public class DbHandleImpl implements DbHandle {
 		}
     }
 
+    private Dbconf getDbconf() {
+        Gson gson = new Gson();
 
+        try (Reader reader = new FileReader("src/resources/dbconf.json")) {
+			dbconf = gson.fromJson(reader, Dbconf.class);
+		} catch (FileNotFoundException e) {
+			e.printStackTrace();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+    	return dbconf;
+    }
     
 }

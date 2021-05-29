@@ -1,0 +1,5 @@
+{
+    "path":"jdbc:mysql://localhost:3306/gamerChatApp",
+    "user":"root",
+    "pass":"Kill-Z0ne"
+}
