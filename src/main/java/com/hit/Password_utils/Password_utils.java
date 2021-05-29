@@ -23,7 +23,7 @@ public class Password_utils { //Encryption methods to increase SECURITY & REGULA
     private final int KEY_LENGTH = 128;
     private static Password_utils instance;
     private Configuration conf = null;
-    private String path = "/Users/orissacci/eclipse-workspace/GamerChatAppServer/resources/configuration.json";
+    private String path = "src/resources/configuration.json";
     
     private Password_utils() {
     
