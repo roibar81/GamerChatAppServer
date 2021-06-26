@@ -5,6 +5,7 @@ import com.hit.Password_utils.Password_utils;
 import com.hit.dao.DbHandle;
 import com.hit.dao.DbHandleImpl;
 import com.hit.dm.Game;
+import com.hit.server.*;
 
 /**
  * Hello world!
@@ -15,6 +16,7 @@ public class App
     static ArrayList<Game> gamesList = new ArrayList<Game>();
     public static void main( String[] args )
     {
+        Server server = new Server(12345);
         Password_utils password_utils = Password_utils.getInstance();
         System.out.println( "Hello World!" );
         String salt = password_utils.getSalt(8);

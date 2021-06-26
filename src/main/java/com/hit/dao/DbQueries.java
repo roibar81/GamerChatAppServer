@@ -22,6 +22,7 @@ public class DbQueries {
     public String addUser = "insert into users (id, name, email, password, salt)" +
     "values (?, ?, ?, ?, ?);";
     public String getAllUsers = "select * from users;";
+    public String getUserByName = "select * from users where name=?;";
     public String deleteUser = "delete from users where name=?;";
     //friend table queries
     public String getUserFriends = "select * from friends where id=?;";

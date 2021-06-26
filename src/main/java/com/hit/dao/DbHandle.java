@@ -8,6 +8,7 @@ import com.hit.dm.User;
 
 
 public interface DbHandle {
+    
     public Connection getConnection();
     //game functions
     public void addGame(Game game);
@@ -21,4 +22,6 @@ public interface DbHandle {
     public void addUser(User user);
     public ArrayList<User> getAllUsers();
     public void deleteUser(User user);
+    public User getUserByName(String username);
+
 }

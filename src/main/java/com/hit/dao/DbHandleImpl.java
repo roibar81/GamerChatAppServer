@@ -200,5 +200,23 @@ public class DbHandleImpl implements DbHandle {
 		}
     	return dbconf;
     }
+
+	@Override
+	public User getUserByName(String username) {
+		try {
+			conn = getConnection();
+			prepStat = conn.prepareStatement(queries.getUserByName); 
+			prepStat.setString(1, username);
+			rs = prepStat.executeQuery();
+            while(rs.next()) {
+                user = new User(rs.getInt("id"), rs.getString("name"), rs.getString("email"), rs.getString("password"), rs.getString("salt"));
+            }		
+		} catch (Exception e) {
+			System.out.println(e.getMessage());	
+		}
+
+		return user;
+	}
     
+	
 }
