@@ -217,6 +217,42 @@ public class DbHandleImpl implements DbHandle {
 
 		return user;
 	}
+
+	@Override
+	public boolean isUserExist(User user) {
+		User userTemp = null;
+		try {
+			conn = getConnection();
+			prepStat = conn.prepareStatement(queries.getUserByName);
+			prepStat.setString(1, user.getName());
+			rs = prepStat.executeQuery();
+			userTemp = new User(rs.getString("name"), rs.getString("password"));
+		
+		} catch (Exception e) {
+			System.out.println(e.getMessage());	
+		}
+		return userTemp.isNameEqual(user);
+	}
     
+	@Override
+	public boolean validUser(User user) {
+		String salt = "";
+		String secPass;
+		
+		try {
+			conn= getConnection();
+			user = getUserByName(user.getName());
+			secPass = passUtil.generateSecurePassword(user.getPassword(), user.getSalt());
+			prepStat = conn.prepareStatement(queries.verifyPassword);
+			prepStat.setString(1, user.getPassword());
+			rs = prepStat.executeQuery();
+			if(rs.next()) {
+				return true;
+			}
+		} catch (Exception e) {
+			System.out.println(e.getMessage());	
+		}
+		return false;
+	}
 	
 }

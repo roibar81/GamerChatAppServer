@@ -13,6 +13,12 @@ public class User {
     private ArrayList<User> friends;
     private ArrayList<Game> favGames;
     
+    
+    public User(String name, String password) {
+        this.name = name;
+        this.password = password;
+    }
+
     public User(int id, String name, String email, String password, String salt) {
         this.id = id;
         this.name = name;
@@ -89,5 +95,8 @@ public class User {
                 + name + ", password=" + password + ", salt=" + salt + "]";
     }
 
+    public boolean isNameEqual(User user) {
+        return this.getName().equals(user.getName());
+    }
     
 }
