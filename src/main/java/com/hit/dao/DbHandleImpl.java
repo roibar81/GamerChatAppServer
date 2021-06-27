@@ -30,7 +30,7 @@ public class DbHandleImpl implements DbHandle {
     private ArrayList<Game> gamesList = new ArrayList<Game>();
     private ArrayList<User> friendsList = new ArrayList<User>();
     private Game game;
-    private User user;
+    private User userTemp;
     private Dbconf dbconf;
 	
 	private DbHandleImpl() {
@@ -120,8 +120,8 @@ public class DbHandleImpl implements DbHandle {
             prepStat.setInt(1, user.getId());
             rs = prepStat.executeQuery();
             while(rs.next()) {
-                user = new User(rs.getInt("id"), rs.getString("name"), rs.getString("email"), rs.getString("password"), rs.getString("salt"));
-                friendsList.add(user);
+                userTemp = new User(rs.getInt("id"), rs.getString("name"), rs.getString("email"), rs.getString("password"), rs.getString("salt"));
+                friendsList.add(userTemp);
             }
 		} catch (Exception e) {
 			System.out.println(e.getMessage());	
@@ -163,10 +163,10 @@ public class DbHandleImpl implements DbHandle {
             try {
 			conn= getConnection();
 			state = conn.createStatement();
-			rs = state.executeQuery(queries.getAllGames);  //rs contain the query result.
+			rs = state.executeQuery(queries.getAllUsers);  //rs contain the query result.
             while(rs.next()) {
-                user = new User(rs.getInt("id"), rs.getString("name"), rs.getString("email"), rs.getString("password"), rs.getString("salt"));
-                friendsList.add(user);
+                userTemp = new User(rs.getInt("id"), rs.getString("name"), rs.getString("email"), rs.getString("password"), rs.getString("salt"));
+                friendsList.add(userTemp);
             }
 		} catch (Exception e) {
 			System.out.println(e.getMessage());	
@@ -209,42 +209,39 @@ public class DbHandleImpl implements DbHandle {
 			prepStat.setString(1, username);
 			rs = prepStat.executeQuery();
             while(rs.next()) {
-                user = new User(rs.getInt("id"), rs.getString("name"), rs.getString("email"), rs.getString("password"), rs.getString("salt"));
+                userTemp = new User(rs.getInt("id"), rs.getString("name"), rs.getString("email"), rs.getString("password"), rs.getString("salt"));
             }		
 		} catch (Exception e) {
 			System.out.println(e.getMessage());	
 		}
 
-		return user;
+		return userTemp;
 	}
 
 	@Override
 	public boolean isUserExist(User user) {
-		User userTemp = null;
+	
 		try {
 			conn = getConnection();
-			prepStat = conn.prepareStatement(queries.getUserByName);
-			prepStat.setString(1, user.getName());
-			rs = prepStat.executeQuery();
-			userTemp = new User(rs.getString("name"), rs.getString("password"));
-		
+			userTemp = getUserByName(user.getName());
+			if(userTemp.isNameEqual(user))
+				return true;	
 		} catch (Exception e) {
 			System.out.println(e.getMessage());	
 		}
-		return userTemp.isNameEqual(user);
+		return false;
 	}
     
 	@Override
 	public boolean validUser(User user) {
-		String salt = "";
 		String secPass;
 		
 		try {
 			conn= getConnection();
-			user = getUserByName(user.getName());
-			secPass = passUtil.generateSecurePassword(user.getPassword(), user.getSalt());
+			userTemp = getUserByName(user.getName());
+			secPass = passUtil.generateSecurePassword(user.getPassword(), userTemp.getSalt());
 			prepStat = conn.prepareStatement(queries.verifyPassword);
-			prepStat.setString(1, user.getPassword());
+			prepStat.setString(1, secPass);
 			rs = prepStat.executeQuery();
 			if(rs.next()) {
 				return true;

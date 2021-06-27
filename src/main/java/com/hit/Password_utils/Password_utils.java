@@ -9,7 +9,6 @@ import java.security.SecureRandom;
 import java.security.spec.InvalidKeySpecException;
 import java.util.Arrays;
 import java.util.Base64;
-import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import javax.crypto.SecretKeyFactory;
 import javax.crypto.spec.PBEKeySpec;
@@ -76,7 +75,7 @@ public class Password_utils { //Encryption methods to increase SECURITY & REGULA
     
     public boolean validPassword(String password) {
     	boolean flag = true;
-    	Matcher matcher;
+    
     	Pattern specailCharPatten = Pattern.compile("[^a-z0-9 ]", Pattern.CASE_INSENSITIVE);
         Pattern UpperCasePatten = Pattern.compile("[A-Z ]");
         Pattern lowerCasePatten = Pattern.compile("[a-z ]");

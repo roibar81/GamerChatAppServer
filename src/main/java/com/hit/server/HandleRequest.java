@@ -4,10 +4,6 @@ import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.net.Socket;
-import java.util.ArrayList;
-import com.hit.dm.Game;
-import com.hit.dm.User;
-import com.hit.server.Request.*;
 import com.hit.service.Services;
 import com.hit.service.SignInService;
 import com.google.gson.Gson;
@@ -15,8 +11,6 @@ import com.google.gson.Gson;
 public class HandleRequest implements Runnable {
 
     private Socket socket;
-    private Header header;
-    private Body body;
     private Request request;
     private Response response;
     private String action;
@@ -42,7 +36,7 @@ public class HandleRequest implements Runnable {
         try {
             reqStr = reader.readObject().toString();
             request = readRequest(reqStr);
-
+            System.out.println(request);
             action = request.getHeader().getAction();
 
             switch(action) {
