@@ -24,11 +24,14 @@ public class SignInService implements Services{
         response = new Response(request.getHeader(), new Body());
         user = request.getBody().getUserList().get(0);
         if(dbHandle.isUserExist(user) && dbHandle.validUser(user)) {
+            response.getHeader().setAction("sign_in success");
             response.getBody().setValid(true);
             userList.add(request.getBody().getUserList().get(0));
             response.getBody().setUserList(this.userList);
 
         }
+        else 
+            response.getHeader().setAction("sign_in faild");
         return response;
     }
 
