@@ -32,6 +32,7 @@ public class DbHandleImpl implements DbHandle {
     private Game game;
     private User userTemp;
     private Dbconf dbconf;
+	private String secPass;
 	
 	private DbHandleImpl() {
 		
@@ -55,13 +56,9 @@ public class DbHandleImpl implements DbHandle {
 		    conn = DriverManager.getConnection(dbconf.getPath(), dbconf.getUser(), dbconf.getPass());   
 		} catch(SQLException e) {
 		   System.out.println(e.getMessage());
-		} catch (ClassNotFoundException e) {
-			e.printStackTrace();
-		} catch (InstantiationException e) {
-			e.printStackTrace();
-		} catch (IllegalAccessException e) {
-			e.printStackTrace();
-		}
+		} catch (ClassNotFoundException | InstantiationException | IllegalAccessException e) {
+			System.out.println(e.getMessage());
+		} 
 		return conn;
 	}
 
@@ -143,12 +140,13 @@ public class DbHandleImpl implements DbHandle {
     @Override
     public void addUser(User user) {
         try {
+			secPass = passUtil.generateSecurePassword(user.getPassword(), user.getSalt());
 			conn = getConnection();
 			prepStat = conn.prepareStatement(queries.addUser); 
 			prepStat.setInt(1, user.getId());
 			prepStat.setString(2, user.getName());
 			prepStat.setString(3, user.getEmail());
-			prepStat.setString(4, user.getPassword());
+			prepStat.setString(4, secPass);
             prepStat.setString(5, user.getSalt());
 			prepStat.executeUpdate();
 			prepStat.close();
@@ -233,9 +231,7 @@ public class DbHandleImpl implements DbHandle {
 	}
     
 	@Override
-	public boolean validUser(User user) {
-		String secPass;
-		
+	public boolean verifyPassword(User user) {
 		try {
 			conn= getConnection();
 			userTemp = getUserByName(user.getName());
@@ -250,6 +246,17 @@ public class DbHandleImpl implements DbHandle {
 			System.out.println(e.getMessage());	
 		}
 		return false;
+	}
+
+	@Override
+	public int generateUserId() {
+		friendsList = getAllUsers();
+		int userId; 
+		if(friendsList.size() == 0)
+			userId = 0;
+		else
+			userId = friendsList.size();
+		return userId; 
 	}
 	
 }

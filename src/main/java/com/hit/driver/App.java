@@ -7,10 +7,6 @@ import com.hit.dm.Game;
 import com.hit.dm.User;
 import com.hit.server.*;
 
-/**
- * Hello world!
- *
- */
 public class App 
 {
     static ArrayList<Game> gamesList = new ArrayList<>();

@@ -2,8 +2,6 @@ package com.hit.dm;
 
 import java.util.ArrayList;
 
-import com.hit.Password_utils.Password_utils;
-
 public class User {
     private int id;
     private String name;
