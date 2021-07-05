@@ -23,10 +23,10 @@ public class SignInService implements Services{
     public Response executeService(Request request) {
         response = new Response(request.getHeader(), new Body());
         user = request.getBody().getUserList().get(0);
-        if(dbHandle.isUserExist(user) && dbHandle.validUser(user)) {
+        if(dbHandle.isUserExist(user) && dbHandle.verifyPassword(user)) {
             response.getHeader().setAction("sign_in success");
-            response.getBody().setValid(true);
-            userList.add(request.getBody().getUserList().get(0));
+            user = dbHandle.getUserByName(user.getName());
+            userList.add(user);
             response.getBody().setUserList(this.userList);
 
         }

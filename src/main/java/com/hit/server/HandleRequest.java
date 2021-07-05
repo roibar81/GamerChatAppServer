@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.net.Socket;
+import com.hit.service.RegisterService;
 import com.hit.service.Services;
 import com.hit.service.SignInService;
 import com.google.gson.Gson;
@@ -43,11 +44,17 @@ public class HandleRequest implements Runnable {
                 case "sign_in":
                     services = new SignInService();
                     break;
+                case "sign_out":
+                    break;
+                case "sign_up":
+                    services = new RegisterService();
+                    break;
                 default:
                     break;
             }
             response = services.executeService(request);
             resStr = writeResponse(response);
+            System.out.println(resStr);
             writer.writeObject(resStr);
         }catch(IOException | ClassNotFoundException e) {
 			e.printStackTrace();
@@ -67,5 +74,6 @@ public class HandleRequest implements Runnable {
         Request request = gson.fromJson(requestString, Request.class);
         return request;
     }
+
 
 }

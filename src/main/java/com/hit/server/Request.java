@@ -70,36 +70,22 @@ public class Request {
         private ArrayList<User> userList;
         private ArrayList<Game> gameList;
         private String pattern;
-        private boolean valid;
-
         
         public Body() {
             this.userList = new ArrayList<>();
             this.gameList = new ArrayList<>();
             this.pattern = "";
-            this.valid = false;
         }
         public Body(ArrayList<User> userList, ArrayList<Game> gameList) {
             this.userList = userList;
             this.gameList = gameList;
             this.pattern = "";
-            this.valid = false;
         }
 
         public Body(ArrayList<User> userList, ArrayList<Game> gameList, String pattern) {
             this.userList = userList;
             this.gameList = gameList;
             this.pattern = pattern;
-            this.valid = false;
-        }
-
-        
-        public boolean isValid() {
-            return valid;
-        }
-
-        public void setValid(boolean valid) {
-            this.valid = valid;
         }
 
         public ArrayList<User> getUserList() {

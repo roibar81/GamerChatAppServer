@@ -26,6 +26,7 @@ public interface DbHandle {
     public ArrayList<User> getAllUsers();
     public void deleteUser(User user);
     public User getUserByName(String username);
-    public boolean validUser(User user);
+    public boolean verifyPassword(User user);
+    public int generateUserId();
 
 }
