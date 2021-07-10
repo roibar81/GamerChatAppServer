@@ -1,11 +1,22 @@
 package com.hit.dm;
 
+import java.sql.Blob;
+
 public class Game {
-    private String name;
-    private String image;
-    private String catagory;
     private int id;
+    private String name;
+    private String catagory;
+    private String image;
+    private Blob imageBlob;
     
+    
+    public Game(int id, String name, Blob imageBlob, String catagory) {
+        this.id = id;
+        this.name = name;
+        this.catagory = catagory;
+        this.imageBlob = imageBlob;
+    }
+
     public Game(int id, String name, String image, String catagory) {
         this.id = id;
         this.name = name;
@@ -45,9 +56,19 @@ public class Game {
         this.catagory = catagory;
     }
 
+    
+    public Blob getImageBlob() {
+        return imageBlob;
+    }
+
+    public void setImageBlob(Blob imageBlob) {
+        this.imageBlob = imageBlob;
+    }
+
     @Override
     public String toString() {
-        return "Game [catagory=" + catagory + ", id=" + id + ", image=" + image + ", name=" + name + "]";
+        return "Game [catagory=" + catagory + ", id=" + id + ", image=" + image + ", imageBlob=" + imageBlob + ", name="
+                + name + "]";
     }
-    
+
 }

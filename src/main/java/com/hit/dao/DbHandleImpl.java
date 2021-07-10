@@ -1,9 +1,14 @@
 package com.hit.dao;
 
+import java.io.InputStream;
+import java.io.File;
+import java.io.FileInputStream;
 import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
 import java.io.FileReader;
 import java.io.IOException;
 import java.io.Reader;
+import java.sql.Blob;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
@@ -14,6 +19,7 @@ import java.util.ArrayList;
 import com.google.gson.Gson;
 import com.hit.Password_utils.Password_utils;
 import com.hit.dm.Dbconf;
+import com.hit.dm.Friend;
 import com.hit.dm.Game;
 import com.hit.dm.User;
 
@@ -24,18 +30,24 @@ public class DbHandleImpl implements DbHandle {
 	private Statement state = null;
 	private ResultSet rs = null;	
 	private PreparedStatement prepStat = null;
-	private DbQueries queries = DbQueries.getInstance();
+	private DbQueries queries;
 	private static DbHandleImpl instance;
-	private Password_utils passUtil = Password_utils.getInstance();
-    private ArrayList<Game> gamesList = new ArrayList<Game>();
-    private ArrayList<User> friendsList = new ArrayList<User>();
+	private Password_utils passUtil; 
+    private ArrayList<Game> gamesList; 
+    private ArrayList<Friend> friendsList; 
+	private ArrayList<User> userList;
     private Game game;
     private User userTemp;
     private Dbconf dbconf;
 	private String secPass;
+	private Friend friend;
 	
 	private DbHandleImpl() {
-		
+		this.passUtil = Password_utils.getInstance();
+		this.gamesList = new ArrayList<>();
+		this.friendsList = new ArrayList<>();
+		this.userList = new ArrayList<>();
+		this.queries = DbQueries.getInstance();
 	}
 	
 	public static DbHandle getInstance() {
@@ -69,7 +81,8 @@ public class DbHandleImpl implements DbHandle {
 			prepStat = conn.prepareStatement(queries.addGame); 
 			prepStat.setInt(1, game.getId());
 			prepStat.setString(2, game.getName());
-			prepStat.setString(3, game.getImage());
+			InputStream fis = new FileInputStream(new File(game.getImage()));
+			prepStat.setBlob(3, fis);
 			prepStat.setString(4, game.getCatagory());
 			prepStat.executeUpdate();
 			prepStat.close();
@@ -81,12 +94,21 @@ public class DbHandleImpl implements DbHandle {
 
     @Override
     public ArrayList<Game> getAllGames() {
+		byte[] bytes;
+		Blob imageBlob;
+		int i = 1;
+		File f;
         try {
 			conn= getConnection();
 			state = conn.createStatement();
 			rs = state.executeQuery(queries.getAllGames);
             while(rs.next()) {
-                game = new Game(rs.getInt("id"), rs.getString("name"), rs.getString("image"), rs.getString("category"));
+				f = new File("src/resources/images/gamePic" +i+".jpg");
+				FileOutputStream fs = new FileOutputStream(f);
+				imageBlob = rs.getBlob("image");
+				bytes=imageBlob.getBytes(1, (int)imageBlob.length());
+				fs.write(bytes);
+                game = new Game(rs.getInt("id"), rs.getString("name"), imageBlob, rs.getString("category"));
                 gamesList.add(game);
             }
 		} catch (Exception e) {
@@ -110,15 +132,14 @@ public class DbHandleImpl implements DbHandle {
     }
 
     @Override
-    public ArrayList<User> getUserFriends(User user) {
+    public ArrayList<Friend> getAllFriends(User user) {
         try {
 			conn= getConnection();
-			prepStat = conn.prepareStatement(queries.getUserFriends);
-            prepStat.setInt(1, user.getId());
-            rs = prepStat.executeQuery();
+			state = conn.createStatement();
+			rs = state.executeQuery(queries.getAllFriends);
             while(rs.next()) {
-                userTemp = new User(rs.getInt("id"), rs.getString("name"), rs.getString("email"), rs.getString("password"), rs.getString("salt"));
-                friendsList.add(userTemp);
+                friend = new Friend(rs.getInt("idUser"), rs.getInt("idFriend"));
+                friendsList.add(friend);
             }
 		} catch (Exception e) {
 			System.out.println(e.getMessage());	
@@ -126,9 +147,32 @@ public class DbHandleImpl implements DbHandle {
 		return friendsList;
     }
 
+	@Override
+	public ArrayList<User> getUserFriends(User user) {
+		userList = getAllUsers();
+		for(User u : userList) {
+			if(!isUserFriend(user, u) || !isUserFriend(u, user)) {
+				userList.remove(u);
+			}
+		}
+		return userList;
+	}
+	
     @Override
-    public void addUserFriend(User user, User friend) {
- 
+    public boolean isUserFriend(User user, User friend) {
+		try {
+			conn= getConnection();
+			prepStat = conn.prepareStatement(queries.isUserFriend);
+            prepStat.setInt(1, user.getId());
+			prepStat.setInt(2, friend.getId());
+            rs = prepStat.executeQuery();
+            while(rs.next()) {
+                return true;
+            }
+		} catch (Exception e) {
+			System.out.println(e.getMessage());	
+		}
+		return false;
     }
 
     @Override
@@ -161,15 +205,15 @@ public class DbHandleImpl implements DbHandle {
             try {
 			conn= getConnection();
 			state = conn.createStatement();
-			rs = state.executeQuery(queries.getAllUsers);  //rs contain the query result.
+			rs = state.executeQuery(queries.getAllUsers); 
             while(rs.next()) {
                 userTemp = new User(rs.getInt("id"), rs.getString("name"), rs.getString("email"), rs.getString("password"), rs.getString("salt"));
-                friendsList.add(userTemp);
+                userList.add(userTemp);
             }
 		} catch (Exception e) {
 			System.out.println(e.getMessage());	
 		}
-		return friendsList;
+		return userList;
     }
 
     @Override
@@ -250,13 +294,13 @@ public class DbHandleImpl implements DbHandle {
 
 	@Override
 	public int generateUserId() {
-		friendsList = getAllUsers();
+		userList = getAllUsers();
 		int userId; 
-		if(friendsList.size() == 0)
+		if(userList.size() == 0)
 			userId = 0;
 		else
-			userId = friendsList.size();
+			userId = userList.size();
 		return userId; 
 	}
-	
+
 }
