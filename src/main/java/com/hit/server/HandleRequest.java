@@ -56,20 +56,21 @@ public class HandleRequest implements Runnable {
             resStr = writeResponse(response);
             System.out.println(resStr);
             writer.writeObject(resStr);
+            writer.flush();
         }catch(IOException | ClassNotFoundException e) {
 			e.printStackTrace();
 		}
         
     }
     
-    public static String writeResponse(Response response) {
+    public String writeResponse(Response response) {
         String resStr = null;
         Gson gson = new Gson();
         resStr = gson.toJson(response);
         return resStr;
     }
 
-    public static Request readRequest(String requestString) {
+    public Request readRequest(String requestString) {
         Gson gson = new Gson();
         Request request = gson.fromJson(requestString, Request.class);
         return request;
