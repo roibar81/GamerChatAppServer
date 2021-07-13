@@ -17,7 +17,7 @@ public class AddGameTest {
     public void beforeTest() {
         dbHandle = DbHandleImpl.getInstance();
         gamesList = new ArrayList<>();
-        game = new Game(0, "Warcraft", "/Users/orissacci/Downloads/warcraft.png", "strategy");
+        //game = new Game(0, "Warcraft", "/Users/orissacci/Downloads/warcraft.png", "strategy");
         
     }
 

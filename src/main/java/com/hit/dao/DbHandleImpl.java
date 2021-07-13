@@ -1,6 +1,7 @@
 package com.hit.dao;
 
 import java.io.InputStream;
+import java.io.EOFException;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
@@ -83,7 +84,7 @@ public class DbHandleImpl implements DbHandle {
 			prepStat.setString(2, game.getName());
 			InputStream fis = new FileInputStream(new File(game.getImage()));
 			prepStat.setBlob(3, fis);
-			prepStat.setString(4, game.getCatagory());
+			prepStat.setString(4, game.getCategory());
 			prepStat.executeUpdate();
 			prepStat.close();
 			conn.close();			
@@ -103,12 +104,13 @@ public class DbHandleImpl implements DbHandle {
 			state = conn.createStatement();
 			rs = state.executeQuery(queries.getAllGames);
             while(rs.next()) {
-				f = new File("src/resources/images/gamePic" +i+".jpg");
-				FileOutputStream fs = new FileOutputStream(f);
+				//f = new File("src/resources/images/gamePic" +i+".jpg");
+				//FileOutputStream fs = new FileOutputStream(f);
 				imageBlob = rs.getBlob("image");
-				bytes=imageBlob.getBytes(1, (int)imageBlob.length());
-				fs.write(bytes);
-                game = new Game(rs.getInt("id"), rs.getString("name"), imageBlob, rs.getString("category"));
+				bytes = imageBlob.getBytes(1, (int)imageBlob.length());
+				//fs.write(bytes);
+
+                game = new Game(rs.getInt("id"), rs.getString("name"), bytes, rs.getString("category"));
                 gamesList.add(game);
             }
 		} catch (Exception e) {

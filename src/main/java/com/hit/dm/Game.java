@@ -1,27 +1,27 @@
 package com.hit.dm;
 
-import java.sql.Blob;
+import java.util.Arrays;
 
 public class Game {
     private int id;
     private String name;
-    private String catagory;
+    private byte[] imageBlob;
+    private String category;
     private String image;
-    private Blob imageBlob;
     
-    
-    public Game(int id, String name, Blob imageBlob, String catagory) {
+    public Game(int id, String name, byte[] imageBlob, String category) {
         this.id = id;
         this.name = name;
-        this.catagory = catagory;
+        this.image = "";
         this.imageBlob = imageBlob;
+        this.category = category;
     }
 
-    public Game(int id, String name, String image, String catagory) {
+    public Game(int id, String name, String image, String category) {
         this.id = id;
         this.name = name;
         this.image = image;
-        this.catagory = catagory;
+        this.category = category;
     }
 
     public int getId() {
@@ -48,27 +48,26 @@ public class Game {
         this.image = image;
     }
 
-    public String getCatagory() {
-        return catagory;
+    public String getCategory() {
+        return category;
     }
 
-    public void setCatagory(String catagory) {
-        this.catagory = catagory;
+    public void setCategory(String catagory) {
+        this.category = catagory;
     }
 
-    
-    public Blob getImageBlob() {
+    public byte[] getImageBlob() {
         return imageBlob;
     }
 
-    public void setImageBlob(Blob imageBlob) {
+    public void setImageBlob(byte[] imageBlob) {
         this.imageBlob = imageBlob;
     }
 
     @Override
     public String toString() {
-        return "Game [catagory=" + catagory + ", id=" + id + ", image=" + image + ", imageBlob=" + imageBlob + ", name="
-                + name + "]";
+        return "Game [category=" + category + ", id=" + id + ", image=" + image + ", imageBlob="
+                + Arrays.toString(imageBlob) + ", name=" + name + "]";
     }
-
+    
 }
