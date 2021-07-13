@@ -13,10 +13,12 @@ public class SignInService implements Services{
     private User user;
     private Response response;
     private ArrayList<User> userList;
-    
+    private ArrayList<Game> gameList;
+
     public SignInService() {
         this.dbHandle = DbHandleImpl.getInstance();
         this.userList = new ArrayList<>();
+        this.gameList = new ArrayList<>();
     }
 
     @Override
@@ -26,9 +28,11 @@ public class SignInService implements Services{
         if(dbHandle.isUserExist(user) && dbHandle.verifyPassword(user)) {
             response.getHeader().setAction("sign_in success");
             user = dbHandle.getUserByName(user.getName());
-            userList.add(user);
-            response.getBody().setUserList(this.userList);
-
+            response.getBody().setUser(user);
+            userList = dbHandle.getAllUsers();
+            response.getBody().setUserList(userList);
+            gameList = dbHandle.getAllGames();
+            response.getBody().setGameList(gameList);
         }
         else 
             response.getHeader().setAction("sign_in faild");

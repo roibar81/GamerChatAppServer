@@ -67,6 +67,8 @@ public class Request {
     }
 
     public static class Body {
+        private User user;
+        private Game game;
         private ArrayList<User> userList;
         private ArrayList<Game> gameList;
         private String pattern;
@@ -76,6 +78,7 @@ public class Request {
             this.gameList = new ArrayList<>();
             this.pattern = "";
         }
+        
         public Body(ArrayList<User> userList, ArrayList<Game> gameList) {
             this.userList = userList;
             this.gameList = gameList;
@@ -86,6 +89,29 @@ public class Request {
             this.userList = userList;
             this.gameList = gameList;
             this.pattern = pattern;
+        }
+
+        public Body(User user, ArrayList<User> userList, ArrayList<Game> gameList, String pattern) {
+            this.user = user;
+            this.userList = userList;
+            this.gameList = gameList;
+            this.pattern = pattern;
+        }
+
+        public User getUser() {
+            return user;
+        }
+
+        public void setUser(User user) {
+            this.user = user;
+        }
+
+        public Game getGame() {
+            return game;
+        }
+
+        public void setGame(Game game) {
+            this.game = game;
         }
 
         public ArrayList<User> getUserList() {
@@ -114,8 +140,9 @@ public class Request {
 
         @Override
         public String toString() {
-            return "Body [gameList=" + gameList + ", pattern=" + pattern + ", userList=" + userList + "]";
+            return "Body [game=" + game + ", gameList=" + gameList + ", pattern=" + pattern + ", user=" + user
+                    + ", userList=" + userList + "]";
         }
-        
+
     }
 }
