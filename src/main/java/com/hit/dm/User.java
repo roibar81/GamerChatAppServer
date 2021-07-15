@@ -17,14 +17,25 @@ public class User {
         this.password = password;
     }
 
+    
+    public User(String name, String email, String password, String salt) {
+        this.name = name;
+        this.email = email;
+        this.password = password;
+        this.salt = salt;
+        this.friends = new ArrayList<>();
+        this.favGames = new ArrayList<>();
+    }
+
+
     public User(int id, String name, String email, String password, String salt) {
         this.id = id;
         this.name = name;
         this.email = email;
         this.password = password;
         this.salt = salt;
-        this.friends = new ArrayList<User>();
-        this.favGames = new ArrayList<Game>();
+        this.friends = new ArrayList<>();
+        this.favGames = new ArrayList<>();
     }
 
     
@@ -89,8 +100,8 @@ public class User {
 
     @Override
     public String toString() {
-        return "User [email=" + email + ", favGames=" + favGames + ", friends=" + friends + ", id=" + id + ", name="
-                + name + ", password=" + password + ", salt=" + salt + "]";
+        return "User [email=" + email + ", favGames=" + favGames + ", friends=" + friends + ", name=" + name
+                + ", password=" + password + ", salt=" + salt + "]";
     }
 
     public boolean isNameEqual(User user) {

@@ -2,6 +2,7 @@ package com.hit.server;
 
 import java.util.ArrayList;
 
+import com.hit.dm.ChatRoom;
 import com.hit.dm.Game;
 import com.hit.dm.User;
 
@@ -71,30 +72,28 @@ public class Request {
         private Game game;
         private ArrayList<User> userList;
         private ArrayList<Game> gameList;
+        private ArrayList<ChatRoom> chatList;
         private String pattern;
         
         public Body() {
             this.userList = new ArrayList<>();
             this.gameList = new ArrayList<>();
+            this.chatList = new ArrayList<>();
             this.pattern = "";
         }
-        
-        public Body(ArrayList<User> userList, ArrayList<Game> gameList) {
+      
+        public Body(ArrayList<User> userList, ArrayList<Game> gameList, ArrayList<ChatRoom> chatList, String pattern) {
             this.userList = userList;
             this.gameList = gameList;
-            this.pattern = "";
-        }
-
-        public Body(ArrayList<User> userList, ArrayList<Game> gameList, String pattern) {
-            this.userList = userList;
-            this.gameList = gameList;
+            this.chatList = chatList;
             this.pattern = pattern;
         }
 
-        public Body(User user, ArrayList<User> userList, ArrayList<Game> gameList, String pattern) {
+        public Body(User user, ArrayList<User> userList, ArrayList<Game> gameList, ArrayList<ChatRoom> chatList, String pattern) {
             this.user = user;
             this.userList = userList;
             this.gameList = gameList;
+            this.chatList = chatList;
             this.pattern = pattern;
         }
 
@@ -125,6 +124,14 @@ public class Request {
         public ArrayList<Game> getGameList() {
             return gameList;
         }
+        
+        public ArrayList<ChatRoom> getChatList() {
+            return chatList;
+        }
+
+        public void setChatList(ArrayList<ChatRoom> chatList) {
+            this.chatList = chatList;
+        }
 
         public void setGameList(ArrayList<Game> gameList) {
             this.gameList = gameList;
@@ -140,8 +147,8 @@ public class Request {
 
         @Override
         public String toString() {
-            return "Body [game=" + game + ", gameList=" + gameList + ", pattern=" + pattern + ", user=" + user
-                    + ", userList=" + userList + "]";
+            return "Body [chatList=" + chatList + ", game=" + game + ", gameList=" + gameList + ", pattern=" + pattern
+                    + ", user=" + user + ", userList=" + userList + "]";
         }
 
     }

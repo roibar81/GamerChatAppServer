@@ -5,9 +5,8 @@ import java.util.ArrayList;
 
 import javax.swing.text.StyledEditorKit.BoldAction;
 
-import com.hit.dm.Friend;
-import com.hit.dm.Game;
-import com.hit.dm.User;
+import com.google.protobuf.Message;
+import com.hit.dm.*;
 
 
 public interface DbHandle {
@@ -29,6 +28,13 @@ public interface DbHandle {
     public User getUserByName(String username);
     public boolean verifyPassword(User user);
     public boolean isUserExist(User user);
-    public int generateUserId();
+    //chat_rooms
+    public ArrayList<ChatRoom> getAllChatRooms();
+    public void addChatRoom(ChatRoom chatRoom);
+    public void deleteChatRoom(ChatRoom chatRoom);
+    //messages
+    public ArrayList<Messages> getAllMessages();
+    public void addMessage(Messages messages);
+    public void deleteMessage(Messages messages);
 
 }

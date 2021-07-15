@@ -26,8 +26,8 @@ public class RegisterService implements Services{
     @Override
     public Response executeService(Request request) {
         response = new Response(request.getHeader(), new Body());
-        user = request.getBody().getUserList().get(0);
-        User userTemp = new User(dbHandle.generateUserId(), user.getName(), 
+        user = request.getBody().getUser();
+        User userTemp = new User(user.getName(), 
         user.getEmail(), user.getPassword(), password_utils.getSalt(16));
         if(password_utils.validPassword(user.getPassword()) && !dbHandle.isUserExist(user)) {
             response.getHeader().setAction("sign_up success");
