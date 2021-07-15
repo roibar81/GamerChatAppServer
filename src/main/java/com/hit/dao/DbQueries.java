@@ -34,7 +34,7 @@ public class DbQueries {
     public String idFriendExist = "select * from friends where isFriend=?;";
     //chat_rooms queries
     public String getAllChatRooms = "select * from chat_rooms;";
-    public String addChatRoom = "insert into chat_rooms (name) values(?);";
+    public String addChatRoom = "insert into chat_rooms (name, image) values(?, ?);";
     public String deleteChatRoom = "delete from chat_rooms where chat_room_id=?;";
     //messages queries
     public String getAllMessages = "select * from messages;";

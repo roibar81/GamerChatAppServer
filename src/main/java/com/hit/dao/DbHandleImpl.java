@@ -283,7 +283,7 @@ public class DbHandleImpl implements DbHandle {
 			state = conn.createStatement();
 			rs = state.executeQuery(queries.getAllChatRooms); 
             while(rs.next()) {
-                chatRoom = new ChatRoom(rs.getInt("chat_room_id"), rs.getString("name"));
+                chatRoom = new ChatRoom(rs.getInt("chat_room_id"), rs.getString("name"), rs.getInt("image"));
                 chatRooms.add(chatRoom);
             }
 		} catch (Exception e) {
@@ -298,6 +298,7 @@ public class DbHandleImpl implements DbHandle {
 			conn = getConnection();
 			prepStat = conn.prepareStatement(queries.addChatRoom); 
 			prepStat.setString(1, chatRoom.getName());
+			prepStat.setInt(2, chatRoom.getImage());
 			prepStat.executeUpdate();
 			prepStat.close();
 			conn.close();			
