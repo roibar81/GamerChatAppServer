@@ -3,14 +3,17 @@ package com.hit.dm;
 public class ChatRoom {
     private int chatRoom_id;
     private String name;
+    private int image;
     
-    public ChatRoom(String name) {
+    public ChatRoom(String name, int image) {
         this.name = name;
+        this.image = image;
     }
 
-    public ChatRoom(int chatRoom_id, String name) {
+    public ChatRoom(int chatRoom_id, String name, int image) {
         this.chatRoom_id = chatRoom_id;
         this.name = name;
+        this.image = image;
     }
 
     public int getChatRoom_id() {
@@ -29,9 +32,17 @@ public class ChatRoom {
         this.name = name;
     }
 
+    public int getImage() {
+        return image;
+    }
+
+    public void setImage(int image) {
+        this.image = image;
+    }
+
     @Override
     public String toString() {
-        return "ChatRoom [name=" + name + ", chatRoom_id=" + chatRoom_id + "]";
+        return "ChatRoom [chatRoom_id=" + chatRoom_id + ", image=" + image + ", name=" + name + "]";
     }
 
 }
