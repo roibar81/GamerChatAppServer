@@ -14,25 +14,29 @@ public class SignInService implements Services{
     private Response response;
     private ArrayList<User> userList;
     private ArrayList<Game> gameList;
+    private ArrayList<ChatRoom> chatList;
 
     public SignInService() {
         this.dbHandle = DbHandleImpl.getInstance();
         this.userList = new ArrayList<>();
         this.gameList = new ArrayList<>();
+        this.chatList = new ArrayList<>();
     }
 
     @Override
     public Response executeService(Request request) {
         response = new Response(request.getHeader(), new Body());
-        user = request.getBody().getUserList().get(0);
+        user = request.getBody().getUser();
         if(dbHandle.isUserExist(user) && dbHandle.verifyPassword(user)) {
             response.getHeader().setAction("sign_in success");
-            user = dbHandle.getUserByName(user.getName());
-            response.getBody().setUser(user);
+            User userTemp = dbHandle.getUserByName(user.getName());
+            response.getBody().setUser(userTemp);
             userList = dbHandle.getAllUsers();
             response.getBody().setUserList(userList);
             gameList = dbHandle.getAllGames();
             response.getBody().setGameList(gameList);
+            chatList = dbHandle.getAllChatRooms();
+            response.getBody().setChatList(chatList);
         }
         else 
             response.getHeader().setAction("sign_in faild");
