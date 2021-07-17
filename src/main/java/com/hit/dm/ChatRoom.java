@@ -5,6 +5,11 @@ public class ChatRoom {
     private String name;
     private int image;
     
+    
+    public ChatRoom() {
+        
+    }
+
     public ChatRoom(String name, int image) {
         this.name = name;
         this.image = image;

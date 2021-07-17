@@ -10,7 +10,8 @@ public class User {
     private String password;
     private ArrayList<User> friends;
     private ArrayList<Game> favGames;
-    
+    private ArrayList<ChatRoom> chatList;
+     
     
     public User(String name, String password) {
         this.name = name;
@@ -25,6 +26,7 @@ public class User {
         this.salt = salt;
         this.friends = new ArrayList<>();
         this.favGames = new ArrayList<>();
+        this.chatList = new ArrayList<>();
     }
 
 
@@ -36,6 +38,7 @@ public class User {
         this.salt = salt;
         this.friends = new ArrayList<>();
         this.favGames = new ArrayList<>();
+        this.chatList = new ArrayList<>();
     }
 
     
@@ -97,11 +100,20 @@ public class User {
         this.favGames = favGames;
     }
 
+    public ArrayList<ChatRoom> getChatList() {
+        return chatList;
+    }
+
+    public void setChatList(ArrayList<ChatRoom> chatList) {
+        this.chatList = chatList;
+    }
+
+
 
     @Override
     public String toString() {
-        return "User [email=" + email + ", favGames=" + favGames + ", friends=" + friends + ", name=" + name
-                + ", password=" + password + ", salt=" + salt + "]";
+        return "User [chatList=" + chatList + ", email=" + email + ", favGames=" + favGames + ", friends=" + friends
+                + ", id=" + id + ", name=" + name + ", password=" + password + ", salt=" + salt + "]";
     }
 
     public boolean isNameEqual(User user) {

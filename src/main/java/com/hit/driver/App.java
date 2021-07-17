@@ -11,10 +11,11 @@ public class App
 {
     static ArrayList<Game> gamesList = new ArrayList<>();
     static ArrayList<User> userList = new ArrayList<>();
+    
     public static void main( String[] args )
     {
         try{
-            ExecutorService executorService = Executors.newFixedThreadPool(20);
+            ExecutorService executorService = Executors.newFixedThreadPool(100);
             Server server = new Server(12345);
     
             // executorService.execute(server);
