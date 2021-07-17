@@ -4,6 +4,7 @@ import java.util.ArrayList;
 
 import com.hit.dm.ChatRoom;
 import com.hit.dm.Game;
+import com.hit.dm.Messages;
 import com.hit.dm.User;
 
 public class Request {
@@ -71,9 +72,11 @@ public class Request {
         private User user;
         private Game game;
         private ChatRoom chatRoom;
+        private Messages message;
         private ArrayList<User> userList;
         private ArrayList<Game> gameList;
         private ArrayList<ChatRoom> chatList;
+        private ArrayList<Messages> messageList;
         private String pattern;
         
         public Body() {
@@ -108,6 +111,32 @@ public class Request {
             this.chatList = chatList;
             this.pattern = pattern;
         }
+        
+        public Body(User user, Game game, ChatRoom chatRoom, Messages message, ArrayList<User> userList,
+                ArrayList<Game> gameList, ArrayList<ChatRoom> chatList, String pattern) {
+            this.user = user;
+            this.game = game;
+            this.chatRoom = chatRoom;
+            this.message = message;
+            this.userList = userList;
+            this.gameList = gameList;
+            this.chatList = chatList;
+            this.pattern = pattern;
+        }
+
+        public Body(User user, Game game, ChatRoom chatRoom, Messages message, ArrayList<User> userList,
+                ArrayList<Game> gameList, ArrayList<ChatRoom> chatList, ArrayList<Messages> messageList,
+                String pattern) {
+            this.user = user;
+            this.game = game;
+            this.chatRoom = chatRoom;
+            this.message = message;
+            this.userList = userList;
+            this.gameList = gameList;
+            this.chatList = chatList;
+            this.messageList = messageList;
+            this.pattern = pattern;
+        }
 
         public User getUser() {
             return user;
@@ -131,6 +160,14 @@ public class Request {
 
         public void setChatRoom(ChatRoom chatRoom) {
             this.chatRoom = chatRoom;
+        }
+        
+        public Messages getMessage() {
+            return message;
+        }
+
+        public void setMessage(Messages message) {
+            this.message = message;
         }
 
         public ArrayList<User> getUserList() {
@@ -157,6 +194,14 @@ public class Request {
             this.gameList = gameList;
         }
 
+        public ArrayList<Messages> getMessageList() {
+            return messageList;
+        }
+
+        public void setMessageList(ArrayList<Messages> messageList) {
+            this.messageList = messageList;
+        }
+
         public String getPattern() {
             return pattern;
         }
@@ -168,7 +213,8 @@ public class Request {
         @Override
         public String toString() {
             return "Body [chatList=" + chatList + ", chatRoom=" + chatRoom + ", game=" + game + ", gameList=" + gameList
-                    + ", pattern=" + pattern + ", user=" + user + ", userList=" + userList + "]";
+                    + ", message=" + message + ", messageList=" + messageList + ", pattern=" + pattern + ", user="
+                    + user + ", userList=" + userList + "]";
         }
 
     }

@@ -330,7 +330,7 @@ public class DbHandleImpl implements DbHandle {
 			rs = state.executeQuery(queries.getAllMessages); 
             while(rs.next()) {
                 messages = new Messages(rs.getInt("message_id"), rs.getInt("chat_room_id"), 
-				rs.getString("user_name"), rs.getString("message"), rs.getString("created_at"));
+				rs.getString("user_name"), rs.getString("message"));
                 messagesList.add(messages);
             }
 		} catch (Exception e) {
@@ -367,6 +367,43 @@ public class DbHandleImpl implements DbHandle {
 		} catch (Exception e) {
 			System.out.println(e.getMessage());	
 		}
+	}
+
+	@Override
+	public ArrayList<Messages> getChatRoomMessages(int chat_room_id) {
+		ArrayList<Messages> messageList = new ArrayList<>();
+		try {
+			conn = getConnection();
+			prepStat = conn.prepareStatement(queries.getMesageByChatRoomId);
+			prepStat.setInt(1, chat_room_id);
+			rs = prepStat.executeQuery();
+			while(rs.next()) {
+				messages = new Messages(rs.getInt("message_id"), rs.getInt("chat_room_id"), rs.getString("user_name"), 
+				rs.getString("message"));
+				messageList.add(messages);
+			}
+			prepStat.close();
+			conn.close();
+		} catch(Exception e) {
+			System.out.println(e.getMessage());
+		}
+		return messageList;
+	}
+
+	@Override
+	public ChatRoom getChatRoomById(int chatRoomId) {
+		try{
+			conn = getConnection();
+			prepStat = conn.prepareStatement(queries.getChatRoomById);
+			prepStat.setInt(1, chatRoomId);
+			rs = prepStat.executeQuery();
+			chatRoom = new ChatRoom(rs.getInt("room_id"), rs.getString("name"), rs.getInt("image"));
+			prepStat.close();
+			conn.close();	
+		} catch(Exception e) {
+			System.out.println(e.getMessage());
+		}
+		return chatRoom;
 	}
 
 }
