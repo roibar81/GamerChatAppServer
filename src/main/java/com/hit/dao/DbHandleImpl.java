@@ -283,7 +283,7 @@ public class DbHandleImpl implements DbHandle {
 			state = conn.createStatement();
 			rs = state.executeQuery(queries.getAllChatRooms); 
             while(rs.next()) {
-                chatRoom = new ChatRoom(rs.getInt("chat_room_id"), rs.getString("name"), rs.getInt("image"));
+                chatRoom = new ChatRoom(rs.getInt("room_id"), rs.getString("name"), rs.getInt("image"));
                 chatRooms.add(chatRoom);
             }
 		} catch (Exception e) {

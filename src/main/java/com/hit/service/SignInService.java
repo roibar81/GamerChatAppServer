@@ -11,6 +11,7 @@ public class SignInService implements Services{
     
     private DbHandle dbHandle;
     private User user;
+    private ChatRoom chatRoom;
     private Response response;
     private ArrayList<User> userList;
     private ArrayList<Game> gameList;
@@ -18,6 +19,7 @@ public class SignInService implements Services{
 
     public SignInService() {
         this.dbHandle = DbHandleImpl.getInstance();
+        chatRoom = new ChatRoom();
         this.userList = new ArrayList<>();
         this.gameList = new ArrayList<>();
         this.chatList = new ArrayList<>();
@@ -37,6 +39,7 @@ public class SignInService implements Services{
             response.getBody().setGameList(gameList);
             chatList = dbHandle.getAllChatRooms();
             response.getBody().setChatList(chatList);
+            response.getBody().setChatRoom(chatRoom);
         }
         else 
             response.getHeader().setAction("sign_in faild");
