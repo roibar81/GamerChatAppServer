@@ -7,7 +7,6 @@ import com.hit.dao.DbHandleImpl;
 import com.hit.server.Request;
 import com.hit.server.Response;
 import com.hit.server.Request.*;
-import com.hit.dm.ChatRoom;
 import com.hit.dm.Messages;
 
 public class WriteMessageService implements Services{
@@ -24,7 +23,9 @@ public class WriteMessageService implements Services{
     @Override
     public Response executeService(Request request) {
         dbHandle.addMessage(request.getBody().getMessage());
-        response.getBody().setChatRoom(request.getBody().getChatRoom());
+        response.getBody().setChatRoom(dbHandle.getChatRoomById(request.getBody().getChatRoom().getChatRoom_id()));
+        response.getBody().setMessage(request.getBody().getMessage());
+        response.getBody().setUser(request.getBody().getUser());
         messageList = dbHandle.getChatRoomMessages(request.getBody().getMessage().getChat_room_id());
         response.getBody().setMessageList(messageList);
         return response;
