@@ -4,9 +4,12 @@ import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.net.Socket;
+
+import com.hit.service.EnterChatRoomService;
 import com.hit.service.RegisterService;
 import com.hit.service.Services;
 import com.hit.service.SignInService;
+import com.hit.service.WriteMessageService;
 import com.google.gson.Gson;
 
 public class HandleRequest implements Runnable {
@@ -48,6 +51,12 @@ public class HandleRequest implements Runnable {
                     break;
                 case "sign_up":
                     services = new RegisterService();
+                    break;
+                case "enter_chat_room":
+                    services = new EnterChatRoomService();
+                    break;
+                case "write_message":
+                    services = new WriteMessageService();
                     break;
                 default:
                     break;

@@ -32,9 +32,11 @@ public interface DbHandle {
     public ArrayList<ChatRoom> getAllChatRooms();
     public void addChatRoom(ChatRoom chatRoom);
     public void deleteChatRoom(ChatRoom chatRoom);
+    public ChatRoom getChatRoomById(int chatRoomId);
     //messages
     public ArrayList<Messages> getAllMessages();
     public void addMessage(Messages messages);
     public void deleteMessage(Messages messages);
+    public ArrayList<Messages> getChatRoomMessages(int chat_room_id);
 
 }

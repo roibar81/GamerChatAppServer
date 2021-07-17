@@ -36,10 +36,12 @@ public class DbQueries {
     public String getAllChatRooms = "select * from chat_rooms;";
     public String addChatRoom = "insert into chat_rooms (name, image) values(?, ?);";
     public String deleteChatRoom = "delete from chat_rooms where chat_room_id=?;";
+    public String getChatRoomById = "select * from chat_rooms where room_id=?;";
     //messages queries
     public String getAllMessages = "select * from messages;";
-    public String addMessage = "insert into messages (chat_room_id, user_id, message)"+
+    public String addMessage = "insert into messages (chat_room_id, user_name, message)"+
     "values(?, ?, ?);";
     public String deleteMessage = "delete from messages where message_id=?;";
+    public String getMesageByChatRoomId = "select * from messages where chat_room_id=?;";
 
 }
