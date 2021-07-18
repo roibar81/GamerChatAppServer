@@ -22,7 +22,13 @@ public class Server implements Runnable{
     public void run() {
         Socket socket = null;
 
-        System.out.println("Server started");
+        System.out.println("\n\n" +
+        "          _____  _____              _____ _______       _____ _______ ______ _____  \n" +
+        "    /\\   |  __ \\|  __ \\            / ____|__   __|/\\   |  __ \\__   __|  ____|  __ \\ \n" +
+        "   /  \\  | |__) | |__) |  ______  | (___    | |  /  \\  | |__) | | |  | |__  | |  | |\n" +
+        "  / /\\ \\ |  ___/|  ___/  |______|  \\___ \\   | | / /\\ \\ |  _  /  | |  |  __| | |  | |\n" +
+        " / ____ \\| |    | |                ____) |  | |/ ____ \\| | \\ \\  | |  | |____| |__| |\n" +
+        "/_/    \\_\\_|    |_|               |_____/   |_/_/    \\_\\_|  \\_\\ |_|  |______|_____/ \n");
         try {
             serverSocket = new ServerSocket(this.port);
             ExecutorService executorService = Executors.newFixedThreadPool(20);

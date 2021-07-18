@@ -5,8 +5,10 @@ import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.net.Socket;
 
+import com.hit.service.ApproveFriendRequestService;
 import com.hit.service.EnterChatRoomService;
 import com.hit.service.RegisterService;
+import com.hit.service.SendFriendRequestService;
 import com.hit.service.Services;
 import com.hit.service.SignInService;
 import com.hit.service.WriteMessageService;
@@ -58,12 +60,18 @@ public class HandleRequest implements Runnable {
                 case "write_message":
                     services = new WriteMessageService();
                     break;
+                case "send_friend_request":
+                    services = new SendFriendRequestService();
+                    break;
+                case "approve_friend_request":
+                    services = new ApproveFriendRequestService();
+                    break;
                 default:
                     break;
             }
             response = services.executeService(request);
             resStr = writeResponse(response);
-            System.out.println(resStr);
+            System.out.println(resStr+"\n\n");
             writer.writeObject(resStr);
             writer.flush();
         }catch(IOException | ClassNotFoundException e) {

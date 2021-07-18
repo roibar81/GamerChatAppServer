@@ -163,6 +163,36 @@ public class DbHandleImpl implements DbHandle {
         
     }
 
+	@Override
+	public void sendFriendRequest(int user_id, int friend_id) {
+		try {
+			conn = getConnection();
+			prepStat = conn.prepareStatement(queries.addUserFriend);	
+			prepStat.setInt(1, user_id);
+			prepStat.setInt(2, friend_id);
+			prepStat.executeUpdate();
+			prepStat.close();
+			conn.close();
+		} catch(Exception e) {
+			System.out.println(e.getMessage());
+		}
+	}
+
+	@Override
+	public void approveFriendRequest(int user_id, int friend_id) {
+		try {
+			conn = getConnection();
+			prepStat = conn.prepareStatement(queries.addUserFriend);	
+			prepStat.setInt(1, user_id);
+			prepStat.setInt(2, friend_id);
+			prepStat.executeUpdate();
+			prepStat.close();
+			conn.close();
+		} catch(Exception e) {
+			System.out.println(e.getMessage());
+		}	
+	}
+
     @Override
     public void addUser(User user) {
         try {

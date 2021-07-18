@@ -21,6 +21,7 @@ public class EnterChatRoomService implements Services {
     private ChatRoom chatRoom;
 
     public EnterChatRoomService() {
+        chatRoom = new ChatRoom();
         this.response = new Response(new Header("chat_room_page"), new Body());
         this.dbHandle = DbHandleImpl.getInstance();
         this.messageList = new ArrayList<>();
@@ -29,8 +30,7 @@ public class EnterChatRoomService implements Services {
     @Override
     public Response executeService(Request request) {
         response.getBody().setUser(request.getBody().getUser());
-        chatRoom = dbHandle.getChatRoomById(request.getBody().getChatRoom().getChatRoom_id());
-        response.getBody().setChatRoom(chatRoom);
+        response.getBody().setChatRoom(request.getBody().getChatRoom());
         messageList = dbHandle.getChatRoomMessages(request.getBody().getChatRoom().getChatRoom_id());
         response.getBody().setMessageList(messageList);
         return response;   
