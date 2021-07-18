@@ -70,6 +70,7 @@ public class Request {
 
     public static class Body {
         private User user;
+        private User friend;
         private Game game;
         private ChatRoom chatRoom;
         private Messages message;
@@ -86,55 +87,53 @@ public class Request {
             this.pattern = "";
         }
       
-        public Body(ArrayList<User> userList, ArrayList<Game> gameList, ArrayList<ChatRoom> chatList, String pattern) {
-            this.userList = userList;
-            this.gameList = gameList;
-            this.chatList = chatList;
+        public Body(String pattern) {
+            this.userList = new ArrayList<>();
+            this.gameList = new ArrayList<>();
+            this.chatList = new ArrayList<>();
             this.pattern = pattern;
         }
 
-        public Body(User user, ArrayList<User> userList, ArrayList<Game> gameList, ArrayList<ChatRoom> chatList, String pattern) {
+        public Body(User user, String pattern) {
             this.user = user;
-            this.userList = userList;
-            this.gameList = gameList;
-            this.chatList = chatList;
+            this.userList = new ArrayList<>();
+            this.gameList = new ArrayList<>();
+            this.chatList = new ArrayList<>();
             this.pattern = pattern;
         }
         
-        public Body(User user, Game game, ChatRoom chatRoom, ArrayList<User> userList, ArrayList<Game> gameList,
-                ArrayList<ChatRoom> chatList, String pattern) {
+        public Body(User user, Game game, ChatRoom chatRoom, String pattern) {
             this.user = user;
             this.game = game;
             this.chatRoom = chatRoom;
-            this.userList = userList;
-            this.gameList = gameList;
-            this.chatList = chatList;
+            this.userList = new ArrayList<>();
+            this.gameList = new ArrayList<>();
+            this.chatList = new ArrayList<>();
             this.pattern = pattern;
         }
         
-        public Body(User user, Game game, ChatRoom chatRoom, Messages message, ArrayList<User> userList,
-                ArrayList<Game> gameList, ArrayList<ChatRoom> chatList, String pattern) {
+        public Body(User user, Game game, ChatRoom chatRoom, Messages message, String pattern) {
             this.user = user;
             this.game = game;
             this.chatRoom = chatRoom;
             this.message = message;
-            this.userList = userList;
-            this.gameList = gameList;
-            this.chatList = chatList;
+            this.userList = new ArrayList<>();
+            this.gameList = new ArrayList<>();
+            this.chatList = new ArrayList<>();
+            this.messageList = new ArrayList<>();
             this.pattern = pattern;
         }
 
-        public Body(User user, Game game, ChatRoom chatRoom, Messages message, ArrayList<User> userList,
-                ArrayList<Game> gameList, ArrayList<ChatRoom> chatList, ArrayList<Messages> messageList,
-                String pattern) {
+        public Body(User user, User friend, Game game, ChatRoom chatRoom, Messages message, String pattern) {
             this.user = user;
+            this.friend = friend;
             this.game = game;
             this.chatRoom = chatRoom;
             this.message = message;
-            this.userList = userList;
-            this.gameList = gameList;
-            this.chatList = chatList;
-            this.messageList = messageList;
+            this.userList = new ArrayList<>();
+            this.gameList = new ArrayList<>();
+            this.chatList = new ArrayList<>();
+            this.messageList = new ArrayList<>();
             this.pattern = pattern;
         }
 
@@ -144,6 +143,14 @@ public class Request {
 
         public void setUser(User user) {
             this.user = user;
+        }
+        
+        public User getFriend() {
+            return friend;
+        }
+
+        public void setFriend(User friend) {
+            this.friend = friend;
         }
 
         public Game getGame() {
@@ -212,9 +219,9 @@ public class Request {
 
         @Override
         public String toString() {
-            return "Body [chatList=" + chatList + ", chatRoom=" + chatRoom + ", game=" + game + ", gameList=" + gameList
-                    + ", message=" + message + ", messageList=" + messageList + ", pattern=" + pattern + ", user="
-                    + user + ", userList=" + userList + "]";
+            return "Body [chatList=" + chatList + ", chatRoom=" + chatRoom + ", friend=" + friend + ", game=" + game
+                    + ", gameList=" + gameList + ", message=" + message + ", messageList=" + messageList + ", pattern="
+                    + pattern + ", user=" + user + ", userList=" + userList + "]";
         }
 
     }

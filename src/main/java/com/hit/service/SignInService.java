@@ -42,7 +42,7 @@ public class SignInService implements Services{
             response.getBody().setChatRoom(chatRoom);
         }
         else 
-            response.getHeader().setAction("sign_in faild");
+            response.getHeader().setAction("sign_in_failed");
         return response;
     }
 

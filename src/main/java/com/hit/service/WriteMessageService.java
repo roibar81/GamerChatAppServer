@@ -13,7 +13,6 @@ public class WriteMessageService implements Services{
 
     private DbHandle dbHandle;
     private Response response;
-    private ArrayList<Messages> messageList;
 
     public WriteMessageService() {
         this.dbHandle = DbHandleImpl.getInstance();
@@ -23,10 +22,10 @@ public class WriteMessageService implements Services{
     @Override
     public Response executeService(Request request) {
         dbHandle.addMessage(request.getBody().getMessage());
-        response.getBody().setChatRoom(dbHandle.getChatRoomById(request.getBody().getChatRoom().getChatRoom_id()));
+        response.getBody().setChatRoom(request.getBody().getChatRoom());
         response.getBody().setMessage(request.getBody().getMessage());
         response.getBody().setUser(request.getBody().getUser());
-        messageList = dbHandle.getChatRoomMessages(request.getBody().getMessage().getChat_room_id());
+        ArrayList<Messages> messageList = dbHandle.getChatRoomMessages(request.getBody().getMessage().getChat_room_id());
         response.getBody().setMessageList(messageList);
         return response;
     }

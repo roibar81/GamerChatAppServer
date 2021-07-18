@@ -19,6 +19,8 @@ public interface DbHandle {
     //friend functions
     public ArrayList<User> getUserFriends(User user);
     public ArrayList<Friend> getAllFriends(User user);
+    public void sendFriendRequest(int user_id, int friend_id);
+    public void approveFriendRequest(int user_id, int friend_id);
     public boolean isUserFriend(User user,User friend);
     public void deleteUserFriend(User user, User friend);
     //user functions
