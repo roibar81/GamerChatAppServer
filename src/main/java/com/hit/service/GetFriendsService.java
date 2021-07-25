@@ -22,7 +22,7 @@ public class GetFriendsService implements Services {
         ArrayList<User> friendList = dbHandle.getUserFriends(request.getBody().getUser());
         response.getBody().setUser(request.getBody().getUser());
         response.getBody().setUserList(friendList);
-        return null;
+        return response;
     }
     
 }
