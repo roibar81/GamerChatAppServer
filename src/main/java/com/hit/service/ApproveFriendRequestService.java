@@ -2,6 +2,7 @@ package com.hit.service;
 
 import com.hit.dao.DbHandle;
 import com.hit.dao.DbHandleImpl;
+import com.hit.dm.User;
 import com.hit.server.Request;
 import com.hit.server.Response;
 import com.hit.server.Request.*;
@@ -18,10 +19,10 @@ public class ApproveFriendRequestService implements Services{
 
     @Override
     public Response executeService(Request request) {
-        dbHandle.approveFriendRequest(request.getBody().getUser().getId(), 
-            request.getBody().getUserList().get(0).getId());
+        User friend = dbHandle.getUserByName(request.getBody().getFriend().getName());
+        dbHandle.sendFriendRequest(request.getBody().getUser().getId(), friend.getId());
         response.getBody().setUser(request.getBody().getUser());
-        response.getBody().setUserList(request.getBody().getUserList());
+        response.getBody().setFriend(friend);
         return response;
     }
     
