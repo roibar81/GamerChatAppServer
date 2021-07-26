@@ -4,9 +4,19 @@ import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.net.Socket;
+
+import com.hit.algorithm.KmpAlgo;
+import com.hit.algorithm.RabinKarpAlgo;
+import com.hit.field_util.GameCategoryField;
+import com.hit.field_util.GameNameField;
+import com.hit.field_util.NameField;
 import com.hit.service.ApproveFriendRequestService;
 import com.hit.service.EnterChatRoomService;
+import com.hit.service.FriendReqPageService;
+import com.hit.service.GetFriendsService;
 import com.hit.service.RegisterService;
+import com.hit.service.SearchGameService;
+import com.hit.service.SearchUserService;
 import com.hit.service.SendFriendRequestService;
 import com.hit.service.Services;
 import com.hit.service.SignInService;
@@ -64,6 +74,21 @@ public class HandleRequest implements Runnable {
                     break;
                 case "approve_friend_request":
                     services = new ApproveFriendRequestService();
+                    break;
+                case "profile_page":
+                    services = new GetFriendsService();
+                    break;
+                case "friend-list-page":
+                    services = new FriendReqPageService();
+                    break;
+                case "search-user-by-name":
+                    services = new SearchUserService(new KmpAlgo(), new NameField());
+                    break;
+                case "search-game-by-name":
+                    services = new SearchGameService(new RabinKarpAlgo(), new GameNameField());
+                    break;
+                case "search-game-by-category":
+                    services = new SearchGameService(new RabinKarpAlgo(), new GameCategoryField());
                     break;
                 default:
                     break;
