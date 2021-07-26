@@ -17,7 +17,7 @@ public interface DbHandle {
     public ArrayList<Game> getAllGames();
     public void deleteGame(Game game);
     //friend functions
-    public ArrayList<User> getUserFriends(User user);
+    public ArrayList<User> getUserFriends(ArrayList<User> userList, User user);
     public ArrayList<Friend> getAllFriends(User user);
     public void sendFriendRequest(int user_id, int friend_id);
     public void approveFriendRequest(int user_id, int friend_id);
