@@ -78,12 +78,14 @@ public class Request {
         private ArrayList<Game> gameList;
         private ArrayList<ChatRoom> chatList;
         private ArrayList<Messages> messageList;
+        private ArrayList<User> usersRs;
         private String pattern;
         
         public Body() {
             this.userList = new ArrayList<>();
             this.gameList = new ArrayList<>();
             this.chatList = new ArrayList<>();
+            this.usersRs = new ArrayList<>();
             this.pattern = "";
         }
       
@@ -91,6 +93,7 @@ public class Request {
             this.userList = new ArrayList<>();
             this.gameList = new ArrayList<>();
             this.chatList = new ArrayList<>();
+            this.usersRs = new ArrayList<>();
             this.pattern = pattern;
         }
 
@@ -99,6 +102,7 @@ public class Request {
             this.userList = new ArrayList<>();
             this.gameList = new ArrayList<>();
             this.chatList = new ArrayList<>();
+            this.usersRs = new ArrayList<>();
             this.pattern = pattern;
         }
         
@@ -109,6 +113,7 @@ public class Request {
             this.userList = new ArrayList<>();
             this.gameList = new ArrayList<>();
             this.chatList = new ArrayList<>();
+            this.usersRs = new ArrayList<>();
             this.pattern = pattern;
         }
         
@@ -121,6 +126,7 @@ public class Request {
             this.gameList = new ArrayList<>();
             this.chatList = new ArrayList<>();
             this.messageList = new ArrayList<>();
+            this.usersRs = new ArrayList<>();
             this.pattern = pattern;
         }
 
@@ -134,6 +140,7 @@ public class Request {
             this.gameList = new ArrayList<>();
             this.chatList = new ArrayList<>();
             this.messageList = new ArrayList<>();
+            this.usersRs = new ArrayList<>();
             this.pattern = pattern;
         }
 
@@ -184,6 +191,14 @@ public class Request {
         public void setUserList(ArrayList<User> userList) {
             this.userList = userList;
         }
+        
+        public ArrayList<User> getUsersRs() {
+            return usersRs;
+        }
+
+        public void setUsersRs(ArrayList<User> usersRs) {
+            this.usersRs = usersRs;
+        }
 
         public ArrayList<Game> getGameList() {
             return gameList;
@@ -221,7 +236,7 @@ public class Request {
         public String toString() {
             return "Body [chatList=" + chatList + ", chatRoom=" + chatRoom + ", friend=" + friend + ", game=" + game
                     + ", gameList=" + gameList + ", message=" + message + ", messageList=" + messageList + ", pattern="
-                    + pattern + ", user=" + user + ", userList=" + userList + "]";
+                    + pattern + ", user=" + user + ", userList=" + userList + ", usersRs=" + usersRs + "]";
         }
 
     }

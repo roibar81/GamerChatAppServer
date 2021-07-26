@@ -1,7 +1,5 @@
 package com.hit.dm;
 
-import java.util.Arrays;
-
 public class Game {
     private String name;
     private String category;

@@ -129,15 +129,14 @@ public class DbHandleImpl implements DbHandle {
     }
 
 	@Override
-	public ArrayList<User> getUserFriends(User user) {
-		ArrayList<User> userList;
-		userList = getAllUsers();
-		for(User u : userList) {
-			if(!isUserFriend(user, u) || !isUserFriend(u, user)) {
-				userList.remove(u);
+	public ArrayList<User> getUserFriends(ArrayList<User> userList, User user) {
+		ArrayList<User> friendList = new ArrayList<>();
+		for(int i=0; i<userList.size(); i++) {
+			if(isUserFriend(user, userList.get(i)) && isUserFriend(userList.get(i), user)) {
+				friendList.add(userList.get(i));
 			}
 		}
-		return userList;
+		return friendList;
 	}
 	
     @Override
