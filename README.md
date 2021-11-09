@@ -18,7 +18,7 @@ Finding players online.
 * object oriented programing.
 * design patterns such as factory, singelton, obsserver.
 * MVC architecture.
-* Multithreded Server Socket programing.
+* Multithreaded Server Socket programing.
 
 
 
