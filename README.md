@@ -14,9 +14,9 @@ Finding players online.
 
 # About
 
-* mysql DB
-* object oriented programming.
-* design patterns such as factory, singelton, obsserver.
+* MySQL DB
+* Object OrientedPprogramming.
+* Design patterns such as Factory, Singelton, Obsserver.
 * MVC architecture.
 * Multithreaded Server Socket programming.
 
